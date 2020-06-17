@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="node_modules/materialize-css/dist/css/materialize.min.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="Includes/side.css" />
+    <title>Tecnologías</title>
+</head>
+
+<body>
+
+    <header></header>
+
+    <main>
+
+        <div class="container">
+            <div id="preLoader" class="progress col s10 offset-s1 oculto">
+                <div class="indeterminate"></div>
+            </div>
+
+            <div id="divTabla">
+
+                <div class="row valign-wrapper">
+                    <div class="col s10 center-align">
+                        <h4>Tecnologias</h4>
+                    </div>
+                    <div class="col s2">
+                        <a id="cmdAdd" class="btn-floating waves-effect waves-light blue"><i
+                                class="material-icons">add</i></a>
+                    </div>
+                </div>
+
+                <table id="tblTecnologias">
+                    <thead>
+                        <tr>
+                            <th>Tecnoligía</th>
+                            <th>Descripción</th>
+                            <th>Activo</th>
+                            <th>Acciones</th>
+                        </tr>
+
+                    </thead>
+                    <tbody id="tblContenido">
+                        <tr>
+                            <td>Tecnoligía</td>
+                            <td>Descripción</td>
+                            <td>Activo</td>
+                            <td>Acciones</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div id="divAddEdit" style="min-width: 90%;">
+                <h4 id="titleForm">Agregar tecnología</h4>
+
+                <form id="formulario" class="col s12" style="min-width: 80%;">
+
+                    <div class="row" style="display: none;">
+                        <div class="input-field">
+                            <input id="idTecnologia" type="text">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field">
+                            <input id="tecnologia" name="tecnologia" type="text" required>
+                            <label for="tecnologia" data-error="wrong" data-success="right">Tecnología</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field">
+                            <textarea name="descripcion" id="descripcion" rows="2" class="materialize-textarea"
+                                required></textarea>
+                            <label for="descripcion" data-error="wrong" data-success="right">Descripción</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="file-field input-field">
+                            <div class="btn">
+                                <span>Imagen</span>
+                                <input id="imagen" name="imagen" type="file" required accept="image/png, image/jpeg">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field">
+                            <img id="prevImg" class="materialboxed" width="100" src="">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field">
+                            <div class="switch">
+                                <label>
+                                    Inactivo
+                                    <input id="activo" name="activo" type="checkbox">
+                                    <span class="lever"></span>
+                                    Activo
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s6 ">
+                            <a class="waves-effect waves-light btn-small black volver"><i
+                                    class="material-icons left">chevron_left</i>Inicio</a>
+                        </div>
+
+                        <div class="col s6 right-align">
+                            <button id="btnGuardar" class="btn waves-effect waves-light waves-blue blue"
+                                type="button">Guardar
+                                <i class="material-icons right">save</i>
+                            </button>
+                        </div>
+                    </div>
+
+
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+        <div id="deleteModal" class="modal modal-delete">
+            <div class="modal-content">
+                <h4 id="delete-modal-title">Delete Row</h4>
+                <p id="delete-body-message"></p>
+                <p><small>Esta acción no se puede deshacer.</small></p>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Cancelar</a>
+                <a href="#!" id="btnDelete"
+                    class="modal-action modal-close waves-effect waves-red btn red ">Eliminar</a>
+            </div>
+        </div>
+
+    </main>
+
+    <footer></footer>
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
+
+    <script>
+        M.AutoInit();
+
+        $(document).ready(function () {
+            $('header').load('includes/header.html');
+            $('footer').load('includes/footer.html');
+
+            loadData();
+        });
+
+
+        const tbl = document.getElementById('tblContenido');
+        const prev = document.getElementById('prevImg');
+
+        const apiUrl = 'http://localhost:9096/api/Tecnologias';
+
+        function loadData() {
+            showPreloader();
+            while (tbl.firstChild) tbl.removeChild(tbl.firstChild);
+
+            //llmada asincrona
+            $.ajax({
+                url: apiUrl,
+                type: 'GET',
+                async: true,
+                dataType: 'json',
+                contentType: 'applicarion/json',
+                success: function (data) {
+
+                    var tr, td, td2, td3, td4;
+
+                    data.forEach(element => {
+                        tr = document.createElement('tr');
+                        td = document.createElement('td');
+                        td.innerText = `${element.nombreTec}`;
+                        td2 = document.createElement('td');
+                        td2.innerText = `${element.descripcion}`;
+                        td3 = document.createElement('td');
+                        td3.innerText = element.tecActiva? 'Si' : 'No';
+                        td4 = document.createElement('td');
+
+                        var edit = `<a class="btn-floating waves-effect waves-light btn-small cyan lighten-2" 
+                                        onclick="Editar(${element.idTecnologia});">
+                                            <i class="material-icons" style="pointer-events: none;">edit</i></a>`;
+                        var del = `<a class="btn-floating waves-effect waves-light btn-small cyan lighten-2" 
+                                        onclick="modalEliminar(event);" data-id="${element.idTecnologia}" data-tecnologia="${element.tecnologia}">
+                                            <i class="material-icons disabled" style="pointer-events: none;">delete_forever</i></a>`;
+
+                        td4.innerHTML = edit + "&nbsp;&nbsp;" + del;
+
+                        tr.appendChild(td);
+                        tr.appendChild(td2);
+                        tr.appendChild(td3);
+                        tr.appendChild(td4);
+                        tbl.appendChild(tr);
+                    });
+                    $('#preLoader').hide();
+                    $('#divTabla').show();
+
+                    console.log(data);
+                },
+                error: function (result) {
+                    console.error(result);
+                }
+            });
+
+            $('#divTabla').show();
+            $('#preLoader').hide();
+
+        }
+
+        function showPreloader() {
+            $('#divTabla').hide();
+            $('#divAddEdit').hide();
+            $('#preLoader').show();
+        }
+
+        $('#cmdAdd').click(function (e) {
+            showPreloader();
+            $('#preLoader').hide();
+            document.getElementById('titleForm').innerHTML = `Agregar Tecnología`;
+            $('#imagen').attr('required', 'required');
+            prev.src = "";
+            document.getElementById('formulario').reset();
+            $('#divAddEdit').show();
+        });
+
+        $(".volver").click(function (e) {
+            showPreloader();
+            $('#preLoader').hide();
+            $('#divTabla').show();
+        });
+
+        $("#btnGuardar").click(function (e) {
+            if (!document.querySelector('#formulario').checkValidity()) {
+                document.querySelector('#formulario').reportValidity();
+                return;
+            }
+
+            var data = {};
+            data.idTecnologia = $('#idTecnologia').val();
+            data.nombreTec = $('#tecnologia').val();
+            data.descripcion = $('#descripcion').val();
+            data.tecActiva = $('#activo').prop("checked") ? true : false;
+            data.imagen = base64;
+
+            var type, url;
+            console.log(data);
+
+            if (data.idTecnologia == undefined || data.idTecnologia == '') {
+                url = apiUrl;
+                type = 'POST';
+                data.idTecnologia = 0;
+            } else {
+                url = apiUrl + '/' + data.idTecnologia;
+                type = 'PUT';
+            }
+
+            console.log(data);
+
+            $.ajax({
+                url: url,
+                type: type,
+                data: JSON.stringify(data),
+                async: true,
+                dataType: "json",
+                contentType: 'application/json',
+                success: function (result) {
+
+                    var toastHTML = '<span>Información guardada.</span><button class="btn-flat toast-action green-text"><i class="material-icons">done</i></button>';
+                    M.toast({ html: toastHTML });
+
+                    loadData();
+                },
+                error: function (result) {
+                    console.log(result);
+                    var toastHTML = '<span>Error al guardar.</span><button class="btn-flat toast-action red-text"><i class="material-icons">close</i></button>';
+                    M.toast({ html: toastHTML });
+                }
+
+            });
+        });
+
+        var base64 = '';
+        $("#imagen").change(function () {
+            var file = this.files[0];
+            var reader = new FileReader();
+
+            //Event handler
+            reader.addEventListener("load", function () {
+                base64 = reader.result;
+                prev.src = base64;
+            }, false);
+
+            //Fires the load event
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function Editar(id){
+            showPreloader();
+
+            document.getElementById('titleForm').innerHTML = `Editar Tecnología`;
+            $('#imagen').removeAttr('required');
+
+            $.ajax({
+                url: apiUrl + '/' + id,
+                type: 'GET',
+                async: true,
+                dataType: "json",
+                contentType: 'application/json',
+                success: function (data) {
+
+                    $('#preLoader').hide();
+                    document.getElementById('formulario').reset();
+                    $('#idTecnologia').val(data.idTecnologia);
+                    $('#tecnologia').val(data.nombreTec);
+                    $('#descripcion').val(data.descripcion);
+                    $('#activo').prop('checked', data.tecActiva)
+                    prev.src = data.imagen;
+                    base64 = data.imagen;
+
+                    M.updateTextFields();// Actualizar los imputs por labels dinamicos
+                    $('#divAddEdit').show();
+                },
+                error: function (result) {
+                    console.log(result);
+                    var toastHTML = '<span>Error al consultar.</span><button class="btn-flat toast-action red-text"><i class="material-icons">close</i></button>';
+                    M.toast({ html: toastHTML });
+                }
+            });
+
+            
+        }
+
+        var idDelete;
+        function modalEliminar(event) {
+            event.preventDefault();
+
+            let target = event.target;
+            let nombreTec = target.dataset.nombreTec;
+
+            idDelete = target.dataset.id;
+            document.getElementById('delete-modal-title').innerHTML = `Eliminar Tecnología`;
+            document.getElementById('delete-body-message').innerHTML = `¿Seguro de eliminar la tecnología ${nombreTec}?`
+
+            const elem = document.getElementById('deleteModal');
+            const instance = M.Modal.init(elem, { dismissible: false });
+            instance.open();
+        }
+
+
+        $("#btnDelete").click(function (e) {
+            showPreloader();
+
+            $.ajax({
+                url: apiUrl + '/' + idDelete,
+                type: 'DELETE',
+                async: true,
+                dataType: "json",
+                contentType: 'application/json',
+                success: function (result) {
+                    var toastHTML = '<span>Registro eliminado.</span><button class="btn-flat toast-action green-text"><i class="material-icons">done</i></button>';
+                    M.toast({ html: toastHTML });
+
+                    loadData();
+                },
+                error: function (result) {
+                    console.log(result);
+                    var toastHTML = '<span>No se elimino el registro.</span><button class="btn-flat toast-action red-text">Error</button>';
+                    M.toast({ html: toastHTML });
+                    loadData();
+                }
+            });
+        });
+
+    </script>
+
+</body>
+
+
+</html>

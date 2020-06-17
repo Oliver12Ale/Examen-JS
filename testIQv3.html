@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="node_modules\materialize-css\dist\css\materialize.min.css">
+    <link rel="stylesheet" href=" Includes\side.css">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+    <title>TestIq</title>
+</head>
+
+<body>
+    <header id="header">
+
+
+        <ul id="slide-out" class="sidenav sidenav-fixed grey darken-3">
+            <li>
+                <div class="user-view">
+                    <div class="background">
+                        <img class="responsive-img" src="Includes/descarga.jpg">
+                    </div>
+                    <a href="#user"><img class="circle" src="Includes/perfil.jpg"></a>
+                    <a href="#name"><span class="white-text name">Oliver Martinez</span></a>
+                    <a href="#email"><span class="white-text email">aleestudillo@gmail.com</span></a>
+                </div>
+            </li>
+            <li><a href="http://127.0.0.1:5500/testIQv3.html"><i class="material-icons ">play_circle_outline</i>Test</a>
+            </li>
+
+            <li>
+                <div class="divider"></div>
+            </li>
+            <li><a href="Tecnologias.html"><i class="material-icons ">code</i>Tecnologias</a></li>
+            <li><a href="#!"><i class="material-icons ">question_answer</i>Preguntas</a>
+            </li>
+
+
+        </ul>
+        <a href="#" data-target="slide-out" class="sidenav-trigger hide-on-large-only"><i
+                class="material-icons">menu</i></a>
+    </header>
+    <main>
+        <div class="container valign-wrapper">
+            <div id="progress" class="progress oculto">
+                <div class="indeterminate valign-wrapper"></div>
+            </div>
+
+            <div id="cards" class="container">
+
+
+
+                <div class="row">
+                    <div class="col s12">
+                        <h4>MIDE TUS CONOCIMIENTOS, OBTEN TU PUNTO DE PARTIDA</h4>
+                    </div>
+                </div>
+
+                <div class="row" id="rowcards">
+
+
+                
+                    
+                </div>
+
+
+
+
+            </div>
+
+            <div id="instruccionesOcultar" class="container valign-wrapper oculto" style="min-height:90vh;">
+                <div id="divInstrucciones" class="">
+                    <div class="row">
+                        <h3 id="tituloInstrucciones" class="center-align">Cualquier Texto</h3>
+                    </div>
+                </div>
+                <div class="bordes">
+                    <div class="row">
+                        <h4 class="center-align">Instrucciones</h4>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s12">
+                            <p class="flow-text">
+                                Lee detenidamente y selecciona la opcion correcta. recuerda que solo tienes 20 segundos
+                                por
+                                pregunta
+                                <br>¡BUENA SUERTE!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <a id="btnRegresar" class="waves-effect waves-light btn left"><i
+                        class="material-icons left">keyboard_arrow_left</i>Regresar</a>
+
+
+                <a id="btnContinuar" class="waves-effect waves-light btn right"><i
+                        class="material-icons right">keyboard_arrow_right</i>Continuar</a>
+
+            </div>
+
+            <div id="divpreguntas" class="container valign-wrapper oculto" style="min-width:90%;">
+
+                <div class="row">
+                    <div class="col s12 right-align">
+                        Avance
+                    </div>
+                    <div class="col s12 right-align">
+                        <div class="progress black">
+                            <div id="progress2" class="determinate lime lighten-2" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col s12 bordes">
+                    <div class="row ">
+                        <div class="right-align">
+                            <h6 id="tiempo">20</h6> segundos
+                        </div>
+
+                    </div>
+                    <div class="center-align">
+                        <h3 id="pPregunta">Que tal?</h3>
+                    </div>
+
+                    <div id="RadioBtn" class="row center-align ">
+                        <form action="#">
+                            <p>
+                                <label>
+                                    <input name="group1" type="radio" checked />
+                                    <span>Red</span>
+                                </label>
+                            </p>
+                            <p>
+                                <label>
+                                    <input name="group1" type="radio" />
+                                    <span>Yellow</span>
+                                </label>
+                            </p>
+                            <p>
+
+                        </form>
+
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <a id="btnContinuar2" class="waves-effect waves-light btn right"><i
+                                class="material-icons right">keyboard_arrow_right</i>Continuar</a>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div id="modal1" class="modal modal-fixed-footer">
+                <div class="modal-content">
+                    <h4>Resultados</h4>
+                    <div class="container">
+                        <h5>Tu calificación es: <span id="spnCal"></span></h5>
+                        <h6>Te encuentras en un nivel: <span id="spnNivel"></span></h6>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Ok</a>
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+
+    <footer id="footer" class="page-footer">
+
+
+        © 2014 Copyright Text
+
+
+
+    </footer>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/materialize-css/dist/js/materialize.min.js"></script>
+
+    <script src=" Includes/preguntasManager.js"></script>
+    <script>
+        M.AutoInit();
+
+        
+        $(document).ready(function () {
+            $('header').load('includes/header.html');
+            $('footer').load('includes/footer.html');
+
+            loadData();
+        });
+
+const divTecnologias=document.getElementById('rowcards')
+const urltecnologias='http://localhost:9096/api/Tecnologias';
+const urlpreguntas='http://localhost:9096/api/Preguntas/porTecnologia';
+
+
+        function loadData() {
+            showPreloader();
+            while (divTecnologias.firstChild) divTecnologias.removeChild(divTecnologias.firstChild);
+
+            //llmada asincrona
+            $.ajax({
+                url: urltecnologias,
+                type: 'GET',
+                async: true,
+                dataType: 'json',
+                contentType: 'applicarion/json',
+                success: function (data) {
+
+                data.forEach(element => {
+                    var htmlcard=`
+                    <div class="col m4 s12">
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="${element.imagen}">
+                                <span class="card-title black-text">${element.nombreTec}</span>
+                                <a  class="btn-floating halfway-fab waves-effect waves-light red" onclick="mostrarInstrucciones(${element.idTecnologia},'${element.nombreTec}')"><i
+                                        class="material-icons">play_circle_outline</i></a>
+                            </div>
+                            <div class="card-content">
+                                <p>${element.descripcion}</p>
+                            </div>
+                        </div>
+                    </div>
+                    `;
+                    divTecnologias.insertAdjacentHTML('beforeend',htmlcard)
+
+                        
+                    });
+                 
+               
+
+                    console.log(data);
+                },
+                error: function (result) {
+                    console.error(result);
+                }
+            });
+
+           
+             $("#cards").show();
+            $('#preLoader').hide();
+
+        }
+
+        function showPreloader() {
+            $('#divTabla').hide();
+            $('#divAddEdit').hide();
+            $('#preLoader').show();
+        }
+
+        $('#cmdAdd').click(function (e) {
+            showPreloader();
+            $('#preLoader').hide();
+            document.getElementById('titleForm').innerHTML = `Agregar Tecnología`;
+            $('#imagen').attr('required', 'required');
+            prev.src = "";
+            document.getElementById('formulario').reset();
+            $('#divAddEdit').show();
+        });
+
+        $(".volver").click(function (e) {
+            showPreloader();
+            $('#preLoader').hide();
+            $('#divTabla').show();
+        });
+
+
+        var id;
+        var idSelect;
+
+      
+
+        var btnRegresar = document.getElementById('btnRegresar');
+        btnRegresar.addEventListener('click', function (e) {
+
+            regresar();
+        });
+        let listaPreguntas;
+
+     
+
+        var btnContinuar = document.getElementById('btnContinuar');
+        btnContinuar.addEventListener('click', function (e) {
+
+            $.ajax({
+                url: urlpreguntas+'/'+idTecnologia,
+                type: 'GET',
+                async: true,
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (data) {
+
+               
+                        
+                continuar();
+                listaPreguntas = new PreguntasManager(0,data);
+                 printPregunta();
+               
+
+                    console.log(data);
+                },
+                error: function (result) {
+                    console.error(result);
+                }
+            });
+
+
+        
+        });
+        var btnContinuar2 = document.getElementById('btnContinuar2');
+        btnContinuar2.addEventListener('click', function (e) {
+            if (document.querySelector('input[name="opciones"]:checked')) {
+                var opcion = document.querySelector('input[name="opciones"]:checked').value;
+                listaPreguntas.validarpregunta(opcion);
+            }
+
+            var avance = Math.round(((listaPreguntas.posicionActual + 1) / listaPreguntas.preguntas.length) * 100);
+            document.getElementById('progress2').style.width = `${avance}%`;
+
+            if (listaPreguntas.preguntas.length == (listaPreguntas.posicionActual + 1)) {
+                document.getElementById('progress2').style.width = `100%`;
+                //Calificacion
+                mostrarCalificacion();
+                detenerTimer();
+                return;
+            }
+
+
+
+
+            listaPreguntas.siguiente();
+            printPregunta();
+            iniciartimer();
+
+        });
+
+
+
+
+        function mostrarprogress() {
+            $("#progress").show();
+            $("#cards").hide();
+            $("#instruccionesOcultar").hide();
+
+        }
+
+        function mostrarInstrucciones(_idTecnologia,nombreTec) {
+            document.getElementById('tituloInstrucciones').innerText= 'Test ' + nombreTec
+            idTecnologia=_idTecnologia
+           
+
+            
+
+
+
+            mostrarprogress();
+            setTimeout(function () {
+                $("#progress").hide();
+                $("#cards").hide();
+                $("#instruccionesOcultar").show();
+            }, 1000);
+        }
+
+        function regresar() {
+            mostrarprogress();
+            setTimeout(function () {
+                $("#progress").hide();
+                $("#cards").show();
+                $("#instruccionesOcultar").hide();
+            }, 1000);
+        }
+
+
+        function continuar() {
+            mostrarprogress();
+            setTimeout(function () {
+                $("#progress").hide();
+                $("#cards").hide();
+                $("#instruccionesOcultar").hide();
+                $("#divpreguntas").show();
+            }, 1000);
+            iniciartimer();
+
+        }
+
+        const segundos = 20;
+        let segundosRestantes;
+        var timer;
+
+        function iniciartimer() {
+            detenerTimer();
+            segundosRestantes = segundos;
+            timer = setTimeout(mostrarSegundos, 1000);
+        }
+
+        function detenerTimer() {
+            if (timer) {
+                clearTimeout(timer);
+                timer = 0;
+                segundosRestantes = segundos;
+
+            }
+        }
+
+        function mostrarSegundos() {
+            segundosRestantes--;
+            document.getElementById('tiempo').innerText = `${segundosRestantes}`
+            if (segundosRestantes == 0) {
+                document.getElementById('btnContinuar2').click();
+                return;
+            }
+            timer = setTimeout(mostrarSegundos, 1000);
+        }
+
+
+        const divOpciones = document.getElementById('RadioBtn');
+        function printPregunta() {
+           
+            document.getElementById('pPregunta').innerText = listaPreguntas.preguntaActual().nombrePregunta;
+
+            while (divOpciones.firstChild) divOpciones.removeChild(divOpciones.firstChild);
+
+            divOpciones.appendChild(listaPreguntas.opcionesControl());
+        }
+
+
+
+        function mostrarCalificacion() {
+            var correctas = listaPreguntas.preguntas.filter(p => p.respuestaCorrecta == true);
+            var cal = Math.round((correctas.length / listaPreguntas.preguntas.length) * 100);
+
+            document.getElementById('spnCal').innerText = cal;
+
+            var lista = [
+                { Seniority: "Jr", min: 0, max: 40, posicion: 1 },
+                { Seniority: "Semi-Sr", min: 40, max: 80, posicion: 2 },
+                { Seniority: "SR", min: 80, max: 100, posicion: 3 }
+            ];
+
+            var nivel = lista.filter(x => (x.min <= cal && x.max >= cal))[0];
+            document.getElementById('spnNivel').innerText = nivel.Seniority;
+
+            $('#modal1').modal('open');
+
+
+        }
+
+    </script>
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
